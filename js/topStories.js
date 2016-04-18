@@ -15,9 +15,9 @@ class TopStories {
   checkStorage(section) {
     /* check if we already have this articles in storage */
     if (this.storage.get(section)) {
-      this.proxyRenderArticles(this.storage.get(section));
+      this.renderArticles(this.storage.get(section));
     } else {
-      this.proxyLoadSection(section);
+      this.loadNewSection(section);
     }
   }
 
@@ -65,14 +65,17 @@ class TopStories {
         this.storage.set(data.section, data.results);
 
         /* render received results */
-        this.proxyRenderArticles(data.results);
+        this.renderArticles(data.results);
         $section.classList.remove('loading');
 
       });
   }
 
   init(section) {
-    this.proxyLoadSection = new Proxy(this.loadNewSection,
+    /**
+     * Proxies are commented since Babel can not transpile them due to ES5 limitations
+     */
+    /*this.proxyLoadSection = new Proxy(this.loadNewSection,
       {
         apply: (target, thisArg, argumentsList) => {
           console.log(`Loading ${argumentsList[0]} section`);
@@ -97,7 +100,7 @@ class TopStories {
           }
           return target.apply(thisArg, argumentsList);
         }
-      });
+      });*/
 
     /* Add listener for links */
     let $menu = document.querySelector('.menu');
@@ -107,10 +110,10 @@ class TopStories {
 
       /* check if it's a menu link */
       if ($target.classList.contains('menu_link')) {
-        let sectionTitle = $target.dataset.section;
+        let sectionTitle = $target.getAttribute('data-section');
 
         /* check if we already have this articles in storage */
-        this.proxyCheckStorage(sectionTitle);
+        this.checkStorage(sectionTitle);
 
       }
     });
@@ -118,7 +121,7 @@ class TopStories {
 
 
     /* Load Section */
-    this.proxyLoadSection(section);
+    this.loadNewSection(section);
   };
 }
 
