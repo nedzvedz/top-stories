@@ -1,24 +1,12 @@
 'use strict';
 
+import DataFactory from './dataFactory';
+
 class TopStories {
   constructor(section) {
-
-    this.storage = new Map(); // Store for request results
+    this.dataFactory = new DataFactory();
+    console.log(this.dataFactory);
     this.init(section);
-  }
-
-
-  generateUrl(section) {
-    return `http://api.nytimes.com/svc/topstories/v1/${section}.json?api-key=75ae6a87552ef88bad7daa7a4bdb971b:2:74942476`;
-  }
-
-  checkStorage(section) {
-    /* check if we already have this articles in storage */
-    if (this.storage.get(section)) {
-      this.renderArticles(this.storage.get(section));
-    } else {
-      this.loadNewSection(section);
-    }
   }
 
   renderArticles(results) {
@@ -58,14 +46,11 @@ class TopStories {
     $section.classList.add('loading');
     $sectionTitle.innerHTML = `Section: ${section}`;
 
-    fetch(this.generateUrl(section))
-      .then(response => response.json(), error => console.log(error))
+    this.dataFactory.getData(section)
       .then(data => {
-        /* save results into the storage */
-        this.storage.set(data.section, data.results);
-
+        console.log(data);
         /* render received results */
-        this.renderArticles(data.results);
+        this.renderArticles(data);
         $section.classList.remove('loading');
 
       });
@@ -112,13 +97,10 @@ class TopStories {
       if ($target.classList.contains('menu_link')) {
         let sectionTitle = $target.getAttribute('data-section');
 
-        /* check if we already have this articles in storage */
-        this.checkStorage(sectionTitle);
+        this.loadNewSection(sectionTitle);
 
       }
     });
-
-
 
     /* Load Section */
     this.loadNewSection(section);
