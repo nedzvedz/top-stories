@@ -1,0 +1,5 @@
+h3.article_title
+    a(href="#{url}") #{title}
+if multimedia[0]
+    img.article_image(src="#{multimedia[0].url}", alt="#{caption}")
+p.article_description #{abstract}

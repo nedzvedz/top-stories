@@ -5,7 +5,7 @@
   <title>Top Stories Application</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
         integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="src/css/style.css"/>
+  <link rel="stylesheet" href="build/css/main.css"/>
 </head>
 <body>
 <nav class="navigation">
@@ -47,14 +47,8 @@
   <section class="section">
     <header>
       <h2 class="section_title"></h2>
-      <div class="sorting">
-        <label for="sorting" class="sorting_label">Sort by:</label>
-        <select name="sorting" id="sorting">
-          <option value="title">Title</option>
-          <option value="date">Date</option>
-        </select>
-      </div>
     </header>
+    <button id="loadNews" class="btn btn-primary">Load News</button>
     <main id="main" class="section_articles">
 
     </main>
@@ -66,9 +60,6 @@
   </section>
 </div>
 
-<script src="src/lib/polyfill.min.js"></script>
-<script src="src/lib/fetch.js"></script>
-<script src="src/lib/es6-promise.min.js"></script>
 <script src="build/js/main.js"></script>
 </body>
 </html>

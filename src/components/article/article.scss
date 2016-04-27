@@ -1,0 +1,26 @@
+.article {
+  width: 100%;
+  padding: 0;
+
+  @media (min-width: 768px) {
+    width: 50%;
+    padding-right: 15px;
+
+    &:nth-child(even) {
+      padding-right: 0;
+      padding-left: 15px;
+    }
+  }
+
+  &_title {
+    margin: 20px 0 5px 0;
+  }
+
+  &_image {
+    width: 75px;
+    height: 75px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+  }
+}

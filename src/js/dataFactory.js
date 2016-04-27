@@ -1,6 +1,6 @@
 'use strict';
 
-export default class DataFactory {
+class DataFactory {
   constructor() {
     this.storage = new Map();
   }
@@ -24,3 +24,5 @@ export default class DataFactory {
     }
   }
 }
+
+module.exports = DataFactory;
