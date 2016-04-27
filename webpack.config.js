@@ -34,9 +34,6 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      include: [
-        path.resolve(__dirname, 'sc/js')
-      ],
       exclude: /(node_modules|bower_components)/,
       loader: 'babel',
       query: {
