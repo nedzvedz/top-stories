@@ -2,7 +2,7 @@
 
 import './article.scss';
 
-import template from './menu.jade';
+import template from './article.jade';
 
 class Article {
   constructor(data) {

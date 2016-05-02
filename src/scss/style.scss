@@ -124,12 +124,30 @@ body {
 
 /* Styles for section */
 .section {
+  &_header {
+    position: relative;
+    height: 40px;
+    //&:after {
+    //  content: '';
+    //  display: table;
+    //  clear: both;
+    //}
+  }
   &_title {
+    line-height: 40px;
     text-transform: uppercase;
     border-bottom: 1px solid #000;
   }
+  &_showMore {
+    position: absolute;
+    top: 0;
+    right: 0;
+    .section--listing & {
+      display: none;
+    }
+  }
 
-  &_articles {
+  &_content {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -150,10 +168,10 @@ body {
   margin: 0 auto;
   width: 70px;
   text-align: center;
-}
 
-.section.loading .spinner {
-  display: block;
+  .loading & {
+    display: block;
+  }
 }
 
 .spinner > div {
