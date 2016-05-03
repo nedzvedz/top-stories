@@ -1,35 +1,36 @@
 "use strict";
 
+const mediatorService = require('./util/mediatorService');
+
 class Controller {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
+  constructor() {
+    this.mediator = mediatorService.getService();
+    this.init();
   }
+
 
   setView(hash) {
     const route = hash.split('/')[1];
     const page = route || '';
-    this._updatePage(page);
+    this.updatePage(page);
   }
 
   /**
    * Event fires on load. Gets all items & displays them
    */
   showAll() {
-    this.view.startLoading();
-    this.model.read({key: 'all'}, data => {
-      this.view.render('showAll', data);
-    });
+    this.mediator.publish('view:loading');
+    this.mediator.publish('model:read', {key: 'all'});
   }
 
   /**
    *  Renders all news for selected section
    */
   showSection(section) {
-    this.model.read({key: section}, data => this.view.render('showSection', data));
+    this.mediator.publish('model:read', {key: section});
   }
 
-  _updatePage(page) {
+  updatePage(page) {
     if (page == '') {
       this.showAll();
     } else {
@@ -37,5 +38,9 @@ class Controller {
     }
   }
 
+  init() {
+    this.mediator.subscribe('window:load', 'Controller', [this, this.setView]);
+    this.mediator.subscribe('hash:change', 'Controller', [this, this.setView]);
+  }
 }
 module.exports = Controller;

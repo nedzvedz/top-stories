@@ -1,7 +1,7 @@
 "use strict";
 
-var Article = require('../components/article');
-var Section = require('../components/section');
+const ComponentFactory = require('./componentFactory');
+const componentFactory = new ComponentFactory;
 
 class Template {
   constructor() {
@@ -9,11 +9,11 @@ class Template {
   showAll(data) {
     let fragment = document.createDocumentFragment();
     for (let section of data) {
-      let newSection = new Section(section);
+      let newSection = componentFactory.createComponent({'componentType': 'section', 'data': section});
       let sectionContent = newSection.elem.querySelector('.section_content');
 
       for (let article of section.results) {
-        let newArticle = new Article(article);
+        let newArticle = componentFactory.createComponent({'componentType': 'article', 'data': article});
         sectionContent.appendChild(newArticle.elem);
       }
       fragment.appendChild(newSection.elem);
@@ -23,13 +23,13 @@ class Template {
 
   showSection(data) {
     let fragment = document.createDocumentFragment();
-    let newSection = new Section(data);
+    let newSection = componentFactory.createComponent({'componentType': 'section', 'data': data});
     let sectionContent = newSection.elem.querySelector('.section_content');
 
     newSection.elem.classList.add('section--listing');
 
     for (let article of data.results) {
-      let newArticle = new Article(article);
+      let newArticle = componentFactory.createComponent({'componentType': 'article', 'data': article});
       sectionContent.appendChild(newArticle.elem);
     }
     fragment.appendChild(newSection.elem);

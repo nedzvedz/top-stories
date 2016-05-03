@@ -1,10 +1,14 @@
 'use strict';
 
+const mediatorService = require('./util/mediatorService');
+
 class Model {
   constructor() {
+    this.mediator = mediatorService.getService();
     this.sections = ['home', 'world', 'national', 'politics', 'nyregion', 'business', 'opinion', 'technology',
       'health', 'sports', 'arts', 'fashion', 'dining', 'travel', 'magazine', 'realestate'];
     this.storage = new Map();
+    this.init();
   }
 
   read(query, cb) {
@@ -18,7 +22,7 @@ class Model {
             let firstTwoArtciles = section.results.slice(0, 2);
             data.push({name: section.section, results: firstTwoArtciles});
           }
-          cb(data);
+          this.mediator.publish('view:update', {'cmd': 'showAll', 'param': data});
         }, err => {
           console.log('Something goes wrong: ' + err.message);
         });
@@ -28,7 +32,7 @@ class Model {
             name: query.key,
             results: res
           };
-          cb(data);
+          this.mediator.publish('view:update', {'cmd': 'showSection', 'param': data});
         }
       );
     }
@@ -68,6 +72,9 @@ class Model {
     }
   }
 
+  init() {
+    this.mediator.subscribe('model:read', 'Model', [this, this.read]);
+  }
 }
 
 module.exports = Model;
