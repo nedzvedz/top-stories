@@ -11,11 +11,6 @@ class View {
     this.$app = document.querySelector('.app');
 
     this.viewCommands = {
-      showAll: parameter => {
-        this.$main.innerHTML = '';
-        this.$main.appendChild(this.template.showAll(parameter));
-        this.stopLoading();
-      },
       showSection: parameter => {
         this.$main.innerHTML = '';
         this.$main.appendChild(this.template.showSection(parameter));

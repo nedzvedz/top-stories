@@ -17,14 +17,14 @@ class Mediator {
   }
 
   unsubscribe(channel, id) {
-    if (!channels[channel]) {
+    if (!this.channels[channel]) {
       return false;
     }
     let i = 0;
-    let len = channels[channel].length;
+    let len = this.channels[channel].length;
     for (i; i < len; i++) {
-      if (channels[channel][i].id === id) {
-        let removed = channels[channel].splice(i, 1);
+      if (this.channels[channel][i].id === id) {
+        let removed = this.channels[channel].splice(i, 1);
         return (removed.length > 0);
       }
     }

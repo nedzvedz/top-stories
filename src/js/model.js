@@ -11,22 +11,7 @@ class Model {
     this.init();
   }
 
-  read(query, cb) {
-    if (query.key === 'all') {
-      let data = [];
-      let urls = this.sections.map(this._generateUrl);
-      Promise.all(urls.map(this._fetchWrap))
-        .then(res => {
-          for (let section of res) {
-            this.storage.set(section.section, section.results);
-            let firstTwoArtciles = section.results.slice(0, 2);
-            data.push({name: section.section, results: firstTwoArtciles});
-          }
-          this.mediator.publish('view:update', {'cmd': 'showAll', 'param': data});
-        }, err => {
-          console.log('Something goes wrong: ' + err.message);
-        });
-    } else {
+  read(query) {
       this._getData(query.key).then(res => {
           let data = {
             name: query.key,
@@ -35,7 +20,6 @@ class Model {
           this.mediator.publish('view:update', {'cmd': 'showSection', 'param': data});
         }
       );
-    }
   }
 
   _generateUrl(section) {

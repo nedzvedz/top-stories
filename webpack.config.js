@@ -6,10 +6,10 @@ const path = require('path');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: NODE_ENV == 'development' ? ["webpack-dev-server/client", "./src/js/topStories.js"] : "./src/js/topStories.js",
+  entry: NODE_ENV == 'development' ? ["webpack-dev-server/client?http://localhost:8080/", "./src/js/index.js"] : "./src/js/index.js",
   output: {
     path: __dirname + "/build",
-    publicPath: 'http://localhost:8080/build',
+    publicPath: '/build/',
     filename: NODE_ENV == 'production' ? "js/main.min.js" : "js/main.js"
   },
 
@@ -63,11 +63,7 @@ module.exports = {
     }),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('css/[name].css', {allChunks: true})
-  ],
-
-  devServer: {
-   contentBase: __dirname
-  }
+  ]
 
 };
 

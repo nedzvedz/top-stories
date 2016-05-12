@@ -16,14 +16,6 @@ class Controller {
   }
 
   /**
-   * Event fires on load. Gets all items & displays them
-   */
-  showAll() {
-    this.mediator.publish('view:loading');
-    this.mediator.publish('model:read', {key: 'all'});
-  }
-
-  /**
    *  Renders all news for selected section
    */
   showSection(section) {
@@ -32,7 +24,7 @@ class Controller {
 
   updatePage(page) {
     if (page == '') {
-      this.showAll();
+      this.showSection('home');
     } else {
       this.showSection(page);
     }
